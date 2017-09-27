@@ -1,3 +1,7 @@
 <resources>
+
     <string name="app_name">Soomla</string>
+
+    <string name="banner_button_text">Show Banner</string>
+
 </resources>

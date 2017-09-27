@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners
+        android:radius="@dimen/banner_button_bg_corner_radius"
+    />
+    <gradient
+        android:angle="45"
+        android:centerX="35%"
+        android:centerColor="@color/soomla_teal"
+        android:startColor="@color/soomla_teal_grey"
+        android:endColor="@color/soomla_black"
+        android:type="linear"
+    />
+    <padding
+        android:left="@dimen/banner_button_bg_padding"
+        android:top="@dimen/banner_button_bg_padding"
+        android:right="@dimen/banner_button_bg_padding"
+        android:bottom="@dimen/banner_button_bg_padding"
+    />
+    <size
+        android:width="@dimen/banner_button_width"
+        android:height="@dimen/banner_button_height"
+    />
+    <stroke
+        android:width="3dp"
+        android:color="@color/soomla_black"
+    />
+
+
+</shape>

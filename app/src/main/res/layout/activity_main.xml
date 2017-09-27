@@ -6,13 +6,23 @@
     android:layout_height="match_parent"
     tools:context="com.soomla.robertlesser.soomla.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+
+    <Button
+        android:id="@+id/banner_button"
+        android:layout_width="@dimen/banner_button_width"
+        android:layout_height="@dimen/banner_button_height"
+        android:text="@string/banner_button_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/banner_button_text_size"
+        android:background="@drawable/banner_button_shape"
+        android:shadowColor="@color/soomla_grey"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="100"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </android.support.constraint.ConstraintLayout>
