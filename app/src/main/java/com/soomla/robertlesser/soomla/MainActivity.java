@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.facebook.ads.*;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener, AdListener {
 
     private static String PLACEMENT_ID = "CAROUSEL_IMG_SQUARE_APP_INSTALL#YOUR_PLACEMENT_ID";
 
@@ -48,8 +48,29 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                     // Request an ad
                     adView.loadAd();
+                    adView.setAdListener(this);
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onError(Ad ad, AdError adError) {
+
+    }
+
+    @Override
+    public void onAdLoaded(Ad ad) {
+        
+    }
+
+    @Override
+    public void onAdClicked(Ad ad) {
+
+    }
+
+    @Override
+    public void onLoggingImpression(Ad ad) {
+
     }
 }
