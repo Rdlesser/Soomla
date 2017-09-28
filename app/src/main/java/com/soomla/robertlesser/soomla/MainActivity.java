@@ -1,16 +1,24 @@
 package com.soomla.robertlesser.soomla;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.facebook.ads.*;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 public class MainActivity extends Activity implements View.OnClickListener, AdListener {
 
-    private static String PLACEMENT_ID = "CAROUSEL_IMG_SQUARE_APP_INSTALL#YOUR_PLACEMENT_ID";
+    private static String PLACEMENT_ID = "YOUR_PLACEMENT_ID";
 
     private AdView adView;
     private LinearLayout adContainer;
@@ -61,7 +69,39 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
 
     @Override
     public void onAdLoaded(Ad ad) {
-        
+        AdView view = ((AdView) ad);
+        try {
+            Field field = view.getClass().getDeclaredField("g");
+            field.setAccessible(true);
+            Object value = field.get(view);
+            WebView webView = (WebView) value;
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.addJavascriptInterface(new LoadListener(), "HTMLOUT");
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                    return true;
+                }
+
+                @Override
+                public void onPageStarted(WebView view, String url,
+                                          Bitmap favicon) {
+                }
+
+                public void onPageFinished(WebView view, String url) {
+//                    view.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
+//                    view.loadUrl("");
+                    view.evaluateJavascript("var FunctionOne = function () {"
+                            + "  try{document.getElementsByClassName('buttonText')[1].innerHTML='FUCK YOU!!';}catch(e){}"
+                            + "}; FunctionOne();", null);
+                }
+            });
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -72,5 +112,24 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
     @Override
     public void onLoggingImpression(Ad ad) {
 
+    }
+
+    class LoadListener{
+
+        private String html;
+        @JavascriptInterface
+        public void processHTML(String html)
+        {
+            Log.e("result",html);
+            this.html = html;
+        }
+
+        public void changeButtonText(String text){
+
+        }
+
+        public String getHtml() {
+            return html;
+        }
     }
 }
