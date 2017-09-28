@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
             "http://www.something.com/"
     };
 
+    Button bannerButton;
     private AdView adView;
     private LinearLayout adContainer;
 
@@ -41,10 +42,8 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button bannerButton = findViewById(R.id.banner_button);
+        bannerButton = findViewById(R.id.banner_button);
         bannerButton.setOnClickListener(this);
-
         adContainer = findViewById(R.id.banner_container);
     }
 
@@ -58,20 +57,19 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
 
     @Override
     public void onClick(View view) {
-        final int viewId = view.getId();
-        switch (viewId){
-            case R.id.banner_button:
-                // Instantiate an AdView view
-                adView = new AdView(this, PLACEMENT_ID, AdSize.BANNER_HEIGHT_50);
+        addAd();
+    }
 
-                // Add the ad view to your activity layout
-                adContainer.addView(adView);
+    private void addAd() {
+        // Instantiate an AdView view
+        adView = new AdView(this, PLACEMENT_ID, AdSize.BANNER_HEIGHT_50);
 
-                // Request an ad
-                adView.loadAd();
-                adView.setAdListener(this);
-            break;
-        }
+        // Add the ad view to your activity layout
+        adContainer.addView(adView);
+
+        // Request an ad
+        adView.loadAd();
+        adView.setAdListener(this);
     }
 
     @Override
@@ -97,7 +95,6 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
                         return true;
                     }
                     else {
-                        int i = url.length();
                         return true;
                     }
                 }
@@ -134,25 +131,6 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
     public void onLoggingImpression(Ad ad) {
 
     }
-
-//    class LoadListener{
-//
-//        private String html;
-//        @JavascriptInterface
-//        public void processHTML(String html)
-//        {
-//            Log.e("result",html);
-//            this.html = html;
-//        }
-//
-//        public void changeButtonText(String text){
-//
-//        }
-//
-//        public String getHtml() {
-//            return html;
-//        }
-//    }
 
     public static String getRandom(String[] array){
         int rnd = new Random().nextInt(array.length);
