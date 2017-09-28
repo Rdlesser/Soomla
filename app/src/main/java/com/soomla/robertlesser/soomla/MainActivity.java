@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -16,10 +14,8 @@ import android.widget.LinearLayout;
 import com.facebook.ads.*;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Random;
 
-import static android.R.attr.value;
 
 public class MainActivity extends Activity implements View.OnClickListener, AdListener {
 
