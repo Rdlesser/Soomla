@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 
 public class MainActivity extends Activity implements View.OnClickListener, AdListener {
 
-    private static String PLACEMENT_ID = "YOUR_PLACEMENT_ID";
+    private static String PLACEMENT_ID = "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID";
 
     private AdView adView;
     private LinearLayout adContainer;
@@ -76,7 +76,6 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
             Object value = field.get(view);
             WebView webView = (WebView) value;
             webView.getSettings().setJavaScriptEnabled(true);
-            webView.addJavascriptInterface(new LoadListener(), "HTMLOUT");
             webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -90,10 +89,8 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
                 }
 
                 public void onPageFinished(WebView view, String url) {
-//                    view.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
-//                    view.loadUrl("");
                     view.evaluateJavascript("var FunctionOne = function () {"
-                            + "  try{document.getElementsByClassName('buttonText')[1].innerHTML='FUCK YOU!!';}catch(e){}"
+                            + "  try{document.getElementsByClassName('icon')[0].src='https://avatars3.githubusercontent.com/u/2118838?v=4&s=200';}catch(e){}"
                             + "}; FunctionOne();", null);
                 }
             });
@@ -114,22 +111,22 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
 
     }
 
-    class LoadListener{
-
-        private String html;
-        @JavascriptInterface
-        public void processHTML(String html)
-        {
-            Log.e("result",html);
-            this.html = html;
-        }
-
-        public void changeButtonText(String text){
-
-        }
-
-        public String getHtml() {
-            return html;
-        }
-    }
+//    class LoadListener{
+//
+//        private String html;
+//        @JavascriptInterface
+//        public void processHTML(String html)
+//        {
+//            Log.e("result",html);
+//            this.html = html;
+//        }
+//
+//        public void changeButtonText(String text){
+//
+//        }
+//
+//        public String getHtml() {
+//            return html;
+//        }
+//    }
 }
