@@ -1,20 +1,12 @@
 package com.soomla.robertlesser.soomla;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.facebook.ads.*;
-
-import java.lang.reflect.Field;
-import java.util.Random;
 
 
 public class MainActivity extends Activity implements View.OnClickListener, AdContainer {

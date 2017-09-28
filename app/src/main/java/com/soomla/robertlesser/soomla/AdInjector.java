@@ -1,14 +1,10 @@
 package com.soomla.robertlesser.soomla;
 
 import android.content.Context;
-import android.widget.LinearLayout;
-
 import com.facebook.ads.*;
 import com.facebook.ads.AdListener;
 
 import java.util.ArrayList;
-
-import static com.facebook.ads.AudienceNetworkActivity.PLACEMENT_ID;
 
 /**
  * Created by robertlesser on 28/09/2017.
@@ -20,7 +16,6 @@ public class AdInjector {
 
     Context context;
     ArrayList<AdView> adViews;
-    AdView adView;
     AdListener adlistener;
 
     public AdInjector(Context context, AdListener adlistener){
