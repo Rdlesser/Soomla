@@ -6,6 +6,8 @@ import android.widget.LinearLayout;
 import com.facebook.ads.*;
 import com.facebook.ads.AdListener;
 
+import java.util.ArrayList;
+
 import static com.facebook.ads.AudienceNetworkActivity.PLACEMENT_ID;
 
 /**
@@ -17,17 +19,20 @@ public class AdInjector {
     private static String PLACEMENT_ID = "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID";
 
     Context context;
+    ArrayList<AdView> adViews;
     AdView adView;
     AdListener adlistener;
 
     public AdInjector(Context context, AdListener adlistener){
         this.context = context;
         this.adlistener = adlistener;
+        adViews = new ArrayList<>();
     }
 
     public void addAd(AdContainer adContainer) {
         // Instantiate an AdView view
-        adView = new AdView(context, PLACEMENT_ID, AdSize.BANNER_HEIGHT_50);
+        AdView adView = new AdView(context, PLACEMENT_ID, AdSize.BANNER_HEIGHT_50);
+        adViews.add(adView);
 
         // Add the ad view to your activity layout
         adContainer.addAdToContainer(adView);
@@ -38,8 +43,11 @@ public class AdInjector {
     }
 
     public void destroy() {
-        if (adView != null) {
-            adView.destroy();
+        if (!adViews.isEmpty()) {
+            for (AdView adview : adViews) {
+                adview.destroy();
+            }
+            adViews = new ArrayList<>();
         }
     }
 }
