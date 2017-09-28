@@ -12,7 +12,6 @@ import com.facebook.ads.*;
 public class MainActivity extends Activity implements View.OnClickListener, AdContainer {
 
     Button bannerButton;
-    private AdView adView;
     private LinearLayout adContainer;
 
     private AdInjector adInjector;

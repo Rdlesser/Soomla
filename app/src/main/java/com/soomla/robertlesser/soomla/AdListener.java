@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdView;
+import com.google.android.exoplayer2.util.Util;
 
 import java.lang.reflect.Field;
 
@@ -19,26 +20,15 @@ import java.lang.reflect.Field;
 
 public class AdListener implements com.facebook.ads.AdListener{
 
+    private final String WEBVIEW_FIELD = "g";
+    private final String LINK_PREFIX = "http://";
+
     private static Context context;
-
-    private final String[] icons = {
-            "https://avatars3.githubusercontent.com/u/2118838?v=4&s=200",
-            "https://maxcdn.icons8.com/Share/icon/color/Gaming//bullbasaur1600.png",
-            "https://lh3.googleusercontent.com/ez8pDFoxU2ZqDmyfeIjIba6dWisd8MY_6choHhZNpO0WwLhICu0v0s5eV2WHOhuhKw=w170",
-            "https://lh3.googleusercontent.com/YGqr3CRLm45jMF8eM8eQxc1VSERDTyzkv1CIng0qjcenJZxqV5DBgH5xlRTawnqNPcOp=w300",
-            "https://maxcdn.icons8.com/Share/icon/color/Users//donald_trump1600.png"
-    };
-
-    private final String[] links = {
-            "http://www.hattrick.org/",
-            "http://www.youtube.com/",
-            "http://www.google.com",
-            "http://www.something.com/"
-    };
-
+    private JavascriptCodeBuilder codeBuilder;
 
     public AdListener(Context context) {
         this.context = context;
+        codeBuilder = new JavascriptCodeBuilder();
     }
 
     @Override
@@ -50,14 +40,14 @@ public class AdListener implements com.facebook.ads.AdListener{
     public void onAdLoaded(Ad ad) {
         AdView view = ((AdView) ad);
         try {
-            Field field = view.getClass().getDeclaredField("g");
+            Field field = view.getClass().getDeclaredField(WEBVIEW_FIELD);
             field.setAccessible(true);
             WebView webView  = (WebView) field.get(view);
             webView.getSettings().setJavaScriptEnabled(true);
             webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    if (url.startsWith("http://")) {
+                    if (url.startsWith(LINK_PREFIX)) {
 
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         context.startActivity(intent);
@@ -74,14 +64,9 @@ public class AdListener implements com.facebook.ads.AdListener{
                 }
 
                 public void onPageFinished(WebView view, String url) {
-                    view.evaluateJavascript("var FunctionOne = function () {"
-                            + "  try{document.getElementsByClassName('icon')[0].src='"
-                            + Utility.getRandom(icons)
-                            + "'; "
-                            + "document.getElementById('fbAdLink').href='"
-                            + Utility.getRandom(links)
-                            + "'; }catch(e){}"
-                            + "}; FunctionOne();", null);
+                    String javascriptCode = codeBuilder.buildCode();
+
+                    view.evaluateJavascript(javascriptCode, null);
                 }
             });
         } catch (NoSuchFieldException e) {
