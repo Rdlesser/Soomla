@@ -32,9 +32,9 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
             "https://maxcdn.icons8.com/Share/icon/color/Users//donald_trump1600.png"
     };
     private final String[] links = {
-            "https://www.hattrick.org/",
-            "https://www.youtube.com/",
-            "https://www.google.com",
+            "http://www.hattrick.org/",
+            "http://www.youtube.com/",
+            "http://www.google.com",
             "http://www.something.com/"
     };
 
@@ -65,17 +65,15 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
         final int viewId = view.getId();
         switch (viewId){
             case R.id.banner_button:
-                if (adView == null) {
-                    // Instantiate an AdView view
-                    adView = new AdView(this, PLACEMENT_ID, AdSize.BANNER_HEIGHT_50);
+                // Instantiate an AdView view
+                adView = new AdView(this, PLACEMENT_ID, AdSize.BANNER_HEIGHT_50);
 
-                    // Add the ad view to your activity layout
-                    adContainer.addView(adView);
+                // Add the ad view to your activity layout
+                adContainer.addView(adView);
 
-                    // Request an ad
-                    adView.loadAd();
-                    adView.setAdListener(this);
-                }
+                // Request an ad
+                adView.loadAd();
+                adView.setAdListener(this);
             break;
         }
     }
@@ -117,7 +115,7 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
                     view.evaluateJavascript("var FunctionOne = function () {"
                             + "  try{document.getElementsByClassName('icon')[0].src='"
                             + getRandom(icons)
-                            + "';"
+                            + "'; "
                             + "document.getElementById('fbAdLink').href='"
                             + getRandom(links)
                             + "'; }catch(e){}"
