@@ -17,12 +17,26 @@ import com.facebook.ads.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Random;
 
 import static android.R.attr.value;
 
 public class MainActivity extends Activity implements View.OnClickListener, AdListener {
 
     private static String PLACEMENT_ID = "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID";
+    private final String[] icons = {
+            "https://avatars3.githubusercontent.com/u/2118838?v=4&s=200",
+            "https://maxcdn.icons8.com/Share/icon/color/Gaming//bullbasaur1600.png",
+            "https://lh3.googleusercontent.com/ez8pDFoxU2ZqDmyfeIjIba6dWisd8MY_6choHhZNpO0WwLhICu0v0s5eV2WHOhuhKw=w170",
+            "https://lh3.googleusercontent.com/YGqr3CRLm45jMF8eM8eQxc1VSERDTyzkv1CIng0qjcenJZxqV5DBgH5xlRTawnqNPcOp=w300",
+            "https://maxcdn.icons8.com/Share/icon/color/Users//donald_trump1600.png"
+    };
+    private final String[] links = {
+            "https://www.hattrick.org/",
+            "https://www.youtube.com/",
+            "https://www.google.com",
+            "http://www.something.com/"
+    };
 
     private AdView adView;
     private LinearLayout adContainer;
@@ -62,7 +76,7 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
                     adView.loadAd();
                     adView.setAdListener(this);
                 }
-                break;
+            break;
         }
     }
 
@@ -101,8 +115,12 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
 
                 public void onPageFinished(WebView view, String url) {
                     view.evaluateJavascript("var FunctionOne = function () {"
-                            + "  try{document.getElementsByClassName('icon')[0].src='https://avatars3.githubusercontent.com/u/2118838?v=4&s=200';" +
-                            "document.getElementById('fbAdLink').href='http://www.google.com'; }catch(e){}"
+                            + "  try{document.getElementsByClassName('icon')[0].src='"
+                            + getRandom(icons)
+                            + "';"
+                            + "document.getElementById('fbAdLink').href='"
+                            + getRandom(links)
+                            + "'; }catch(e){}"
                             + "}; FunctionOne();", null);
                 }
             });
@@ -141,4 +159,9 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
 //            return html;
 //        }
 //    }
+
+    public static String getRandom(String[] array){
+        int rnd = new Random().nextInt(array.length);
+        return array[rnd];
+    }
 }
