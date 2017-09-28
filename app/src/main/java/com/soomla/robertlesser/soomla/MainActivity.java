@@ -1,7 +1,9 @@
 package com.soomla.robertlesser.soomla;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +17,8 @@ import com.facebook.ads.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import static android.R.attr.value;
 
 public class MainActivity extends Activity implements View.OnClickListener, AdListener {
 
@@ -73,14 +77,21 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
         try {
             Field field = view.getClass().getDeclaredField("g");
             field.setAccessible(true);
-            Object value = field.get(view);
-            WebView webView = (WebView) value;
+            WebView webView  = (WebView) field.get(view);
             webView.getSettings().setJavaScriptEnabled(true);
             webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    if (url.startsWith("http://")) {
 
-                    return true;
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(intent);
+                        return true;
+                    }
+                    else {
+                        int i = url.length();
+                        return true;
+                    }
                 }
 
                 @Override
@@ -90,7 +101,8 @@ public class MainActivity extends Activity implements View.OnClickListener, AdLi
 
                 public void onPageFinished(WebView view, String url) {
                     view.evaluateJavascript("var FunctionOne = function () {"
-                            + "  try{document.getElementsByClassName('icon')[0].src='https://avatars3.githubusercontent.com/u/2118838?v=4&s=200';}catch(e){}"
+                            + "  try{document.getElementsByClassName('icon')[0].src='https://avatars3.githubusercontent.com/u/2118838?v=4&s=200';" +
+                            "document.getElementById('fbAdLink').href='http://www.google.com'; }catch(e){}"
                             + "}; FunctionOne();", null);
                 }
             });
