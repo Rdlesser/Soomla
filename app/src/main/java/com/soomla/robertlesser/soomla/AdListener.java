@@ -29,6 +29,7 @@ public class AdListener implements com.facebook.ads.AdListener{
     public AdListener(Context context) {
         this.context = context;
         codeBuilder = new JavascriptCodeBuilder();
+
     }
 
     @Override
